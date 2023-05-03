@@ -34,18 +34,38 @@ function playRound(playerSelection,computerSelection){
 
 
 function game(){
-    for(let i=1; i<5; i++){
-        console.log(`Round ${i}`)
+    let user_score = 0;
+    let cpu_score = 0
+    // Round Loop For 5 Times
+    for(let i=1; i<6; i++){
+        result = playRound(playerSelection,computerSelection)
+        if(result == "Lose"){
+            cpu_score += 1
+        } else if(result == "Win"){
+            user_score += 1
+        } 
+    console.log(result);
+
+    // Get Input Again After Each Round
+    if(i == 5){
+        break
     }
-    return continue
+    playerSelection = prompt();
+    computerSelection = getComputerChoice(); 
+}
+    if(user_score > cpu_score){
+        console.log("You've won the best of 5")
+    } else{
+        console.log("You've lost the dual")
+    }
 }
 
 
+
 // Global Variables
-// const playerSelection = 'rock';
+let playerSelection = prompt();
 
-// const computerSelection =  getComputerChoice();
+let computerSelection =  getComputerChoice();
 
-// console.log(playRound(playerSelection, computerSelection));
 
-console.log(game())
+console.log(game(playerSelection, getComputerChoice))
