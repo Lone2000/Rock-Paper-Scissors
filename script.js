@@ -1,3 +1,17 @@
+// Global Variables
+let user_score = 0;
+let cpu_score = 0;
+
+const buttons = document.querySelectorAll('.btn');
+const button = buttons.forEach((button) => button.addEventListener('click', (e)=>{
+    // console.log(e.target.id);
+
+    playRound(e.target.id, getComputerChoice());
+}))
+
+
+
+
 function getComputerChoice(){
     // No input
     // Randomly Get Desired output
@@ -10,72 +24,53 @@ function getComputerChoice(){
         return "scissor"
     }
     // output will be either paper,scissors or rock
-
 }
 
 
 
-function playRound(playerSelection,computerSelection){
-    // Input will be player chose & computer choice aka strings
-    user = playerSelection.toLowerCase()
-    cpu = computerSelection.toLowerCase()
+function playRound(user,cpu){
+    // Console.log arguments aka Inputs
+    // console.log(arguments);
+
+
+    // Create Result Template for display
+    const results = document.querySelector(".results");
+
+
     // Compare both inputs, apply rock paper scissors game rules here
     
     if(user == cpu){
-        return "It's a draw"
+        results.innerHTML = `<p>Draw<br> <p>User Score: ${user_score} <br> <p>Cpu Score: ${cpu_score}</p>`;
+
     } else if((user == 'rock' && cpu == 'paper') || (user =='scissor' && cpu =='rock') || (user == 'paper' && cpu == 'scissor')){
-        return `You Lose! ${cpu} beats ${user}`;
+        cpu_score += 1;
+        results.innerHTML = `<p>Lose<br> <p>User Score: ${user_score} <br> <p>Cpu Score: ${cpu_score}</p>`;
+
     } else if((user == 'paper' && cpu == 'rock') || (user =='rock' && cpu =='scissor') || (user == 'scissor' && cpu == 'paper')){
-        return `You Win!!! ${user} beats ${cpu}`;
+        user_score +=1;
+        results.innerHTML = `<p>Win<br> <p>User Score: ${user_score} <br> <p>Cpu Score: ${cpu_score}</p>`;
     } else{
-        return "Error Occurred";
+        results.innerHTML = 'AN ERROR OCCURRED';
     }
+
+    // Check should only occur when 5 rounds have been played
+    if(user_score + cpu_score == 5){
+        if(user_score > cpu_score){
+            results.innerHTML = `<p>You've won the best of five!!</p>`;
+            buttons.forEach(function (button){
+                button.setAttribute('disabled','');            
+            });
+        }else{
+            results.innerHTML = `<p>You've Lost the best of five!</p> <br> <p>Starting new game in 3 seconds</p>`;
+            buttons.forEach(function (button){
+                button.setAttribute('disabled','');            
+            });
+            setTimeout(function(){
+                window.location.reload();
+            }, 2000);
+        }
+    };
+
+    // Disable Button
 }
 
-
-function game(){
-    let user_score = 0;
-    let cpu_score = 0;
-
-    
-    const buttons = document.querySelectorAll('.btn');
-    console.log(buttons);
-
-    // Add Event Listener on each button
-    buttons.forEach(button =>
-        button.addEventListener('click', (e)=>{
-            let user_input = e.target.id;
-            let result = playRound(user_input, getComputerChoice());
-            console.log(result);
-    }))
-//     // Round Loop For 5 Times
-//     // for(let i=1; i<6; i++){
-//     //     result = playRound(playerSelection,computerSelection);
-//     //     if(result == "Lose"){
-//     //         cpu_score += 1;
-//     //     } else if(result == "Win"){
-//     //         user_score += 1;
-//     //     } 
-//     // console.log(result);
-
-//     // Get Input Again After Each Round
-//     if(i == 5){
-//         break
-//     }
-//     playerSelection = prompt();
-//     computerSelection = getComputerChoice(); 
-// }
-    // 5-Series Result Output
-    if(user_score > cpu_score){
-        console.log("You've won the best of 5")
-    } else{
-        console.log("You've lost the dual")
-    }
-}
-
-
-
-// Global Variables
-
-
-console.log(game())
