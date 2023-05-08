@@ -23,36 +23,49 @@ function playRound(playerSelection,computerSelection){
     
     if(user == cpu){
         return "It's a draw"
-    } else if((user == 'rock' & cpu == 'paper') || (user =='scissor' & cpu =='rock')){
-        return `You Lose! ${cpu} beats ${user}`
-    } else if((user == 'paper' & cpu == 'rock') || (user =='rock' & cpu =='scissor')){
-        return `You Win!!! ${user} beats ${cpu}`
+    } else if((user == 'rock' && cpu == 'paper') || (user =='scissor' && cpu =='rock') || (user == 'paper' && cpu == 'scissor')){
+        return `You Lose! ${cpu} beats ${user}`;
+    } else if((user == 'paper' && cpu == 'rock') || (user =='rock' && cpu =='scissor') || (user == 'scissor' && cpu == 'paper')){
+        return `You Win!!! ${user} beats ${cpu}`;
     } else{
-        return "Error Occurred"
+        return "Error Occurred";
     }
 }
 
 
 function game(){
     let user_score = 0;
-    let cpu_score = 0
-    // Round Loop For 5 Times
-    for(let i=1; i<6; i++){
-        result = playRound(playerSelection,computerSelection)
-        if(result == "Lose"){
-            cpu_score += 1
-        } else if(result == "Win"){
-            user_score += 1
-        } 
-    console.log(result);
+    let cpu_score = 0;
 
-    // Get Input Again After Each Round
-    if(i == 5){
-        break
-    }
-    playerSelection = prompt();
-    computerSelection = getComputerChoice(); 
-}
+    
+    const buttons = document.querySelectorAll('.btn');
+    console.log(buttons);
+
+    // Add Event Listener on each button
+    buttons.forEach(button =>
+        button.addEventListener('click', (e)=>{
+            let user_input = e.target.id;
+            let result = playRound(user_input, getComputerChoice());
+            console.log(result);
+    }))
+//     // Round Loop For 5 Times
+//     // for(let i=1; i<6; i++){
+//     //     result = playRound(playerSelection,computerSelection);
+//     //     if(result == "Lose"){
+//     //         cpu_score += 1;
+//     //     } else if(result == "Win"){
+//     //         user_score += 1;
+//     //     } 
+//     // console.log(result);
+
+//     // Get Input Again After Each Round
+//     if(i == 5){
+//         break
+//     }
+//     playerSelection = prompt();
+//     computerSelection = getComputerChoice(); 
+// }
+    // 5-Series Result Output
     if(user_score > cpu_score){
         console.log("You've won the best of 5")
     } else{
@@ -63,9 +76,6 @@ function game(){
 
 
 // Global Variables
-let playerSelection = prompt();
-
-let computerSelection =  getComputerChoice();
 
 
-console.log(game(playerSelection, getComputerChoice))
+console.log(game())
